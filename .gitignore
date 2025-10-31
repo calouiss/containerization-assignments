@@ -1,0 +1,9 @@
+
+# installers & archives
+AWSCLIV2.pkg
+awscliv2.zip
+*.pkg
+*.zip
+# python caches
+__pycache__/
+*.pyc
