@@ -1,0 +1,31 @@
+services:
+  books-api:
+    build: ./services/books_api
+    container_name: books-api
+    networks: [backend]
+
+  staff-api:
+    build: ./services/staff_api
+    container_name: staff-api
+    networks: [backend]
+
+  readers-api:
+    build: ./services/readers_api
+    container_name: readers-api
+    networks: [backend]
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - books-api
+      - staff-api
+      - readers-api
+    networks: [frontend, backend]   # <-- must include backend
+networks:
+  frontend:
+  backend:
