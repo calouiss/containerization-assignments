@@ -1,31 +1,52 @@
+version: '3.8'
 services:
+
   books-api:
     build: ./services/books_api
-    container_name: books-api
-    networks: [backend]
-
-  staff-api:
-    build: ./services/staff_api
-    container_name: staff-api
-    networks: [backend]
+    ports:
+      - "5001:8080"
+    networks:
+      - backend
+      - frontend
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
 
   readers-api:
     build: ./services/readers_api
-    container_name: readers-api
-    networks: [backend]
+    ports:
+      - "5002:8080"
+    networks:
+      - backend
+      - frontend
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+
+  staff-api:
+    build: ./services/staff_api
+    ports:
+      - "5003:8080"
+    networks:
+      - backend
+      - frontend
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
 
   nginx:
     image: nginx:alpine
-    container_name: nginx
     ports:
-      - "8080:80"
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - "80:80"
     depends_on:
       - books-api
-      - staff-api
       - readers-api
-    networks: [frontend, backend]   # <-- must include backend
+      - staff-api
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - frontend
+
 networks:
   frontend:
   backend:

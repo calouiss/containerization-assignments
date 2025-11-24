@@ -1,13 +1,17 @@
 from flask import Flask, jsonify
+
 app = Flask(__name__)
+
+@app.route("/readers", methods=["GET"])
+def get_readers():
+    return jsonify({
+        "data": ["cynthia", "ann", "louis"],
+        "service": "readers-api"
+    }), 200
 
 @app.route("/health")
 def health():
-    return jsonify({"status": "healthy", "service": "readers-api"})
-
-@app.route("/api/readers")
-def readers_root():
-    return jsonify({"service": "readers-api", "data": ["r1", "r2", "r3"]})
+    return "healthy", 200
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
