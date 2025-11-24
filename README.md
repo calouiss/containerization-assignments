@@ -1,19 +1,32 @@
-# Docker Assignment 1 – MyApp Containerization
+# Docker Assignments – Multi-Container App
 
-This assignment 1 demonstrates secure Docker image creation, container validation, and image publishing to DockerHub and AWS ECR.
-
----
-
-## Task Overview
-- **Task 1:** Dockerfile creation with multi-stage build and security best practices  
-- **Task 2:** Build, run, and validate the container  
-- **Task 3:** Publish Docker image to DockerHub and AWS ECR  
+This repository contains **Assignment 1 and Assignment 2**, implementing a Flask-based microservices application running behind an Nginx reverse proxy.
 
 ---
 
-## 1. Build the Docker Image
+## ✅ Assignment 1 (Done)
+- Containerized a simple Flask application  
+- Added `/health` endpoint  
+- Built and ran Docker image  
+- Verified API responses  
 
-Build the image using the Dockerfile in this repository:
+---
 
-```bash
-docker build -t myapp:1.0 .
+## ✅ Assignment 2 (Done)
+- Separated app into 3 microservices:
+  - books_api  
+  - readers_api  
+  - staff_api
+- Added individual Dockerfiles + health checks  
+- Created `docker-compose.yml` with frontend & backend networks  
+- Added Nginx reverse proxy routing:
+  - `/api/books`
+  - `/api/readers`
+  - `/api/staff`
+- Added `architecture.md` 
+
+---
+
+## 🚀 Run the App
+```sh
+docker-compose up --build
