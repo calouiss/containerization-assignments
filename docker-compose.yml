@@ -1,41 +1,43 @@
-version: '3.8'
+version: "3.8"
+
 services:
 
   books-api:
     build: ./services/books_api
+    container_name: books-api
     ports:
-      - "5001:8080"
+      - "5001:5000"
+    security_opt:
+      - seccomp:./seccomp/seccomp-books-api.json
     networks:
       - backend
       - frontend
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
-      interval: 20s
-      timeout: 5s
-      retries: 3
 
   readers-api:
     build: ./services/readers_api
+    container_name: readers-api
     ports:
-      - "5002:8080"
+      - "5002:5000"
+    security_opt:
+      - seccomp:./seccomp/seccomp-readers-api.json
     networks:
       - backend
       - frontend
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
 
   staff-api:
     build: ./services/staff_api
+    container_name: staff-api
     ports:
-      - "5003:8080"
+      - "5003:5000"
+    security_opt:
+      - seccomp:./seccomp/seccomp-staff-api.json
     networks:
       - backend
       - frontend
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
 
   nginx:
     image: nginx:alpine
+    container_name: nginx
     ports:
       - "80:80"
     depends_on:
