@@ -1,32 +1,52 @@
-# Docker Assignments – Multi-Container App
+# Containerization Assignments: Completed
 
-This repository contains **Assignment 1 and Assignment 2**, implementing a Flask-based microservices application running behind an Nginx reverse proxy.
-
----
-
-## ✅ Assignment 1 (Done)
-- Containerized a simple Flask application  
-- Added `/health` endpoint  
-- Built and ran Docker image  
-- Verified API responses  
+This repository contains Assignments 1–4, implementing a Flask microservices application using Docker, Nginx reverse proxy, and SecComp security.
 
 ---
 
-## ✅ Assignment 2 (Done)
-- Separated app into 3 microservices:
-  - books_api  
-  - readers_api  
-  - staff_api
-- Added individual Dockerfiles + health checks  
-- Created `docker-compose.yml` with frontend & backend networks  
-- Added Nginx reverse proxy routing:
-  - `/api/books`
-  - `/api/readers`
-  - `/api/staff`
-- Added `architecture.md` 
+## ✅ Assignment 1 –  Docker Image Creation, Validation, and Publishing
+- Containerized simple Flask app
+- Added /health endpoint
+- Built & tested Docker image
 
 ---
 
-## 🚀 Run the App
-```sh
+## ✅ Assignment 2 - Multi-Container Application Deployment
+- Split into 3 microservices: books_api, readers_api, staff_api
+- Added Dockerfiles + health checks
+- Configured docker-compose.yml (frontend & backend networks)
+- Added Nginx routing:
+  - /api/books
+  - /api/readers
+  - /api/staff
+- Added architecture diagram (architecture.md)
+
+---
+
+## ✅ Assignment 3 - Docker Runtime Management and Production Configuration
+- Verified Nginx routing to all microservices
+- Ensured all APIs respond correctly through /api/...
+- Confirmed stable multi-container startup using:
+
 docker-compose up --build
+
+---
+
+## ✅ Assignment 4 - Container Security with SecComp Profiles
+- SecComp Profiles
+  - Added custom profiles for all services
+  - Integrated profiles into docker-compose.yml
+
+- Validation
+  - Added script: validate-seccomp.sh
+- Checks:
+  - Containers start under SecComp
+  - Blocked syscalls are detected
+  - APIs remain functional
+- Stress Testing
+  - Added stress-test.py to send 1000 requests per service
+  - All services passed with 0 failed requests
+
+./validate-seccomp.sh
+python stress-test.py
+
